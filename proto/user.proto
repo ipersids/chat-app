@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package user.v1;
+
+message User {
+    string uuid = 1;
+    string login = 2;
+}
+
+service auth_service {
+    rpc create(CreateRequest) returns (CreateResponse);
+    rpc login(LoginRequest) returns (LoginResponse);
+}
+
+message CreateRequest {
+    string login = 1;
+    string password = 2;
+}
+
+message CreateResponse {
+    bool success = 1;
+    User user = 2;
+    string error = 3;
+}
+
+message LoginRequest {
+    string login = 1;
+    string password = 2;
+}
+
+message LoginResponse {
+    bool success = 1;
+    User user = 2;
+    string error = 3;
+}
