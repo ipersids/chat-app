@@ -9,7 +9,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     create_dir_all(&out_path).unwrap();
 
     tonic_prost_build::configure()
-        .build_server(false)
+        .build_server(true)
+        .build_client(false)
         .out_dir(&out_path)
         .compile_protos(&["../proto/user.proto"], &["../proto"])?;
 

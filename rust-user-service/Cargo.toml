@@ -8,6 +8,8 @@ tonic = "0.14.1"
 tokio = { version = "1.0", features = ["rt-multi-thread", "macros"] }
 prost = "0.14"
 tonic-prost = "0.14.1"
+uuid = { version = "1.18.0", features = ["v4"] }
+bcrypt = "0.17.1"
 
 [build-dependencies]
 tonic-prost-build = "0.14.1"
