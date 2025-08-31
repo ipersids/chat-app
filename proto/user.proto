@@ -1,6 +1,7 @@
 syntax = "proto3";
 
 package user.v1;
+option go_package = "go-chat-service/pkg/pb";
 
 message User {
     string uuid = 1;

@@ -1,0 +1,96 @@
+syntax = "proto3";
+
+import "user.proto";
+package chat.v1;
+option go_package = "go-chat-service/pkg/pb";
+
+service ChatService {
+    rpc ManageChat(stream ChatRequest) returns (stream ChatResponse);
+    rpc GetMessages(GetMessagesRequest) returns (stream ChatMessage);
+}
+
+// Requests
+message ChatRequest {
+    oneof request_type {
+        CreateAccountRequest create_account = 1;
+        AuthRequest auth = 2;
+        MessageRequest message = 3;
+    }
+}
+
+message CreateAccountRequest {
+    string login = 1;
+    string password = 2;
+}
+
+message AuthRequest {
+    string login = 1;
+    string password = 2;
+}
+
+message MessageRequest {
+    string text = 1;
+}
+
+// Responses
+message ChatResponse {
+    oneof response_type {
+        CreateAccountResponse create_account = 1;
+        AuthResponse auth = 2;
+        MessageBroadcast message = 3;
+        SystemNotification system = 4;
+        ErrorResponse error = 5;
+    }
+}
+
+message CreateAccountResponse {
+    bool success = 1;
+    string error = 2;
+    user.v1.User user = 3;
+}
+
+message AuthResponse {
+    bool success = 1;
+    string error = 2;
+    user.v1.User user = 3;
+}
+
+message MessageBroadcast {
+    string message_id = 1;
+    string user_id = 2;
+    string username = 3;
+    string text = 4;
+    int64 timestamp = 5;
+}
+
+message SystemNotification {
+    enum Type {
+        USER_JOINED = 0;
+        USER_LEFT = 1;
+    }
+    Type type = 1;
+    string username = 2;
+    string message = 3;
+}
+
+message ErrorResponse {
+    string code = 1;
+    string message = 2;
+}
+
+message GetMessagesRequest {
+    string login = 1;
+    string password = 2;
+    int32 limit = 3;
+}
+
+// Common
+message ChatMessage {
+    string message_id = 1;
+    string user_id = 2;
+    string username = 3;
+    string text = 4;
+    int64 timestamp = 5;
+}
+
+message Empty {}
